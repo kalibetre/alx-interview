@@ -1,4 +1,12 @@
 def pascal_triangle(n):
+    """generates a pascal triangle
+
+    Args:
+        n (int): number of rows
+
+    Returns:
+        list(list(int)): list of lists of integers
+    """
     triangle = list()
     if n > 0:
         for i in range(n):
