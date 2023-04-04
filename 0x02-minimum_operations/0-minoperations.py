@@ -5,7 +5,7 @@
 import math
 
 
-def get_largest_factor(n: int) -> int:
+def get_largest_factor(n):
     """
     returns the largest factor of a number excluding the number itself
     """
@@ -15,7 +15,7 @@ def get_largest_factor(n: int) -> int:
     return 1
 
 
-def minOperations(n: int) -> int:
+def minOperations(n):
     """
     returns the minium number of operations required to generate n consecutive
     'H' characters using 'Copy All' and 'paste' operations. If n is impossible
@@ -35,7 +35,7 @@ def minOperations(n: int) -> int:
     """
     if n <= 1:
         return 0
-    largest_factor: int = get_largest_factor(n)
+    largest_factor = get_largest_factor(n)
     if largest_factor == 1:
         return n
     return n // largest_factor + minOperations(largest_factor)
