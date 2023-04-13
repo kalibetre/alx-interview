@@ -16,6 +16,9 @@ file_size = 0
 
 
 def signal_handler(signal, frame):
+    """
+    signal handler for SIGINT
+    """
     print_stats()
 
 
@@ -50,7 +53,7 @@ def print_stats():
     """
     prints the stats
     """
-    print("File size:", file_size)
+    print("File size: {}".format(file_size))
     for k, v in sorted(status_codes.items()):
         if v > 0:
             print("{}: {}".format(k, v))
@@ -58,11 +61,15 @@ def print_stats():
 
 if __name__ == "__main__":
     for line in sys.stdin:
-        if count % 10 == 0 and count != 0:
+        if count == 10:
             print_stats()
+            count = 0
 
         stat = parse_line(line)
         if stat is not None and stat["status_code"] is not None:
             status_codes[stat["status_code"]] += 1
             file_size += stat["file_size"]
             count += 1
+
+    if count > 0:
+        print_stats()
