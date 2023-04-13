@@ -2,23 +2,11 @@
 """
 0-stats module
 """
-import signal
 import sys
 
 status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 line_count = 0
 file_size = 0
-
-
-def signal_handler(signal, frame):
-    """
-    signal handler for SIGINT
-    """
-    print_stats()
-
-
-signal.signal(signal.SIGINT, signal_handler)
-
 count = 0
 
 
@@ -58,17 +46,21 @@ def print_stats():
 
 
 if __name__ == "__main__":
-    for line in sys.stdin:
-        if count == 10:
+    try:
+        for line in sys.stdin:
+            if count == 10:
+                print_stats()
+                count = 0
+
+            stat = parse_line(line)
+            if stat is not None:
+                if stat["status_code"] is not None:
+                    status_codes[stat["status_code"]] += 1
+                file_size += stat["file_size"]
+                count += 1
+
+        if count > 0:
             print_stats()
-            count = 0
-
-        stat = parse_line(line)
-        if stat is not None:
-            if stat["status_code"] is not None:
-                status_codes[stat["status_code"]] += 1
-            file_size += stat["file_size"]
-            count += 1
-
-    if count > 0:
+    except KeyboardInterrupt:
         print_stats()
+        raise
