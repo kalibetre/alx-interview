@@ -5,7 +5,6 @@
 import sys
 
 status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-line_count = 0
 file_size = 0
 count = 0
 
@@ -19,20 +18,20 @@ def parse_line(line):
     """
     if len(line.split()) < 2:
         return None
+    size = 0
+    status_code = None
+
     try:
-        file_size = int(line.split()[-1])
+        size = int(line.split()[-1])
         status_code = int(line.split()[-2])
 
         if status_code not in status_codes:
             status_code = None
-    except Exception:
-        status_code = None
-        file_size = 0
-
-    return {
-        "status_code": status_code,
-        "file_size": file_size,
-    }
+    finally:
+        return {
+            "status_code": status_code,
+            "file_size": size,
+        }
 
 
 def print_stats():
