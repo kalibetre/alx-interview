@@ -6,10 +6,6 @@ import re
 import signal
 import sys
 
-regex = r"^(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3})\s-\s\[(\d{4}-\d{2}-\d{2} \d{2}"
-regex += r":\d{2}:\d{2}.\d{6})\]\s(\"GET \/projects\/260 HTTP\/1.1\")\s(\d{3})"
-regex += r"\s(\d{3})$"
-
 status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 line_count = 0
 file_size = 0
@@ -34,18 +30,23 @@ def parse_line(line):
     <file size>
     if the line is not with the above format returns None
     """
-    match = re.match(regex, line)
-    if not match:
-        return None
+    # match = re.match(regex, line)
+    # if not match:
+    #     return None
 
-    status_code = match.group(4)
-    if status_code.isnumeric() and int(status_code) in status_codes:
-        status_code = int(status_code)
-    else:
+    try:
+        status_code = int(line.split()[-2])
+        file_size = int(line.split()[-1])
+
+        if status_code not in status_codes:
+            status_code = None
+    except Exception:
         status_code = None
+        file_size = 0
+
     return {
         "status_code": status_code,
-        "file_size": int(match.group(5)),
+        "file_size": int(file_size),
     }
 
 
