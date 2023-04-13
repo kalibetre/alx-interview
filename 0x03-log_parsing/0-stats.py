@@ -6,7 +6,9 @@ import re
 import signal
 import sys
 
-regex = r"^(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3})\s-\s\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{6})\]\s(\"GET \/projects\/260 HTTP\/1.1\")\s(\d{0,3})\s(\d{3})$"
+regex = r"^(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3})\s-\s\[(\d{4}-\d{2}-\d{2} \d{2}"
+regex += r":\d{2}:\d{2}.\d{6})\]\s(\"GET \/projects\/260 HTTP\/1.1\")\s(\d{3})"
+regex += r"\s(\d{3})$"
 
 status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 line_count = 0
@@ -54,12 +56,13 @@ def print_stats():
             print("{}: {}".format(k, v))
 
 
-for line in sys.stdin:
-    if count % 10 == 0 and count != 0:
-        print_stats()
+if __name__ == "__main__":
+    for line in sys.stdin:
+        if count % 10 == 0 and count != 0:
+            print_stats()
 
-    stat = parse_line(line)
-    if stat is not None and stat["status_code"] is not None:
-        status_codes[stat["status_code"]] += 1
-        file_size += stat["file_size"]
-        count += 1
+        stat = parse_line(line)
+        if stat is not None and stat["status_code"] is not None:
+            status_codes[stat["status_code"]] += 1
+            file_size += stat["file_size"]
+            count += 1
