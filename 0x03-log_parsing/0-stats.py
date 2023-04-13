@@ -29,6 +29,8 @@ def parse_line(line):
     <file size>
     if the line is not with the above format returns None
     """
+    if len(line.split()) < 2:
+        return None
     try:
         file_size = int(line.split()[-1])
         status_code = int(line.split()[-2])
@@ -41,7 +43,7 @@ def parse_line(line):
 
     return {
         "status_code": status_code,
-        "file_size": int(file_size),
+        "file_size": file_size,
     }
 
 
@@ -62,8 +64,9 @@ if __name__ == "__main__":
             count = 0
 
         stat = parse_line(line)
-        if stat is not None and stat["status_code"] is not None:
-            status_codes[stat["status_code"]] += 1
+        if stat is not None:
+            if stat["status_code"] is not None:
+                status_codes[stat["status_code"]] += 1
             file_size += stat["file_size"]
             count += 1
 
