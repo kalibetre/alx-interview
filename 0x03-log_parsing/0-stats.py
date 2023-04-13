@@ -2,7 +2,6 @@
 """
 0-stats module
 """
-import re
 import signal
 import sys
 
@@ -30,13 +29,9 @@ def parse_line(line):
     <file size>
     if the line is not with the above format returns None
     """
-    # match = re.match(regex, line)
-    # if not match:
-    #     return None
-
     try:
-        status_code = int(line.split()[-2])
         file_size = int(line.split()[-1])
+        status_code = int(line.split()[-2])
 
         if status_code not in status_codes:
             status_code = None
