@@ -58,8 +58,8 @@ if __name__ == "__main__":
                 file_size += stat["file_size"]
                 count += 1
 
-        if count > 0:
-            print_stats()
     except KeyboardInterrupt:
         print_stats()
         raise
+
+    print_stats()
