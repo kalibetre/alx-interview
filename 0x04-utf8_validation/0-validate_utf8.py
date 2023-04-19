@@ -47,7 +47,7 @@ def validUTF8(data):
     validates a given data set represents a valid utf-8 encoding
     the data set contains list of integers
     """
-    if data is None:
+    if data is None or len(data) == 0:
         return False
 
     while len(data) > 0:
