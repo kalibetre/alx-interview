@@ -47,6 +47,9 @@ def validUTF8(data):
     validates a given data set represents a valid utf-8 encoding
     the data set contains list of integers
     """
+    if data is None:
+        return False
+
     while len(data) > 0:
         seq = get_next_char_seq(data, data[0])
         if seq is None or not is_seq_valid_utf8(seq):
