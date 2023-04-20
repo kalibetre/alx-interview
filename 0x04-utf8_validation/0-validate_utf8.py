@@ -19,21 +19,14 @@ def num_bytes_required(num):
     return -1
 
 
-def get_next_char_seq(sequence, value):
+def get_next_char_seq(sequence):
     """
     returns the next bytes in the sequence
     """
-    num_bytes = num_bytes_required(value)
+    num_bytes = num_bytes_required(sequence[0])
     if num_bytes < 0 or num_bytes > len(sequence):
         return None
-
-    char_seq = []
-    for _ in range(num_bytes):
-        if len(sequence) == 0:
-            return None
-        char = sequence[0]
-        sequence = sequence[1:]
-        char_seq.append(char)
+    char_seq = sequence[:num_bytes]
     if any([num > 247 or num < 0 for num in char_seq]):
         return None
     return char_seq
@@ -58,7 +51,7 @@ def validUTF8(data):
         return False
 
     while len(data) > 0:
-        seq = get_next_char_seq(data, data[0])
+        seq = get_next_char_seq(data)
         if seq is None or not is_seq_valid_utf8(seq):
             return False
         data = data[len(seq):]
