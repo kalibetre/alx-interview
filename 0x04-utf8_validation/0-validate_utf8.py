@@ -50,9 +50,17 @@ def validUTF8(data):
     if data is None:
         return False
 
+    data = list(map(get_least_significant_8bits, data))
     while len(data) > 0:
         seq = get_next_char_seq(data)
         if seq is None or not is_seq_valid_utf8(seq):
             return False
         data = data[len(seq):]
     return True
+
+
+def get_least_significant_8bits(num):
+    """
+    returns the 8 least significant bits of num
+    """
+    return num & ((1 << 8) - 1)
