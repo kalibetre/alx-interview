@@ -8,13 +8,15 @@ def num_bytes_required(num):
     """
     returns the number of bytes required to represent the number in utf-8
     """
-    if num <= 127:
+    if num >= 0 and num <= 127:
         return 1
     elif num <= 223:
         return 2
     elif num <= 239:
         return 3
-    return 4
+    elif num <= 247:
+        return 4
+    return -1
 
 
 def get_next_char_seq(sequence, value):
@@ -22,6 +24,9 @@ def get_next_char_seq(sequence, value):
     returns the next bytes in the sequence
     """
     num_bytes = num_bytes_required(value)
+    if num_bytes < 0:
+        return None
+
     char_seq = []
     for _ in range(num_bytes):
         if len(sequence) == 0:
@@ -29,6 +34,8 @@ def get_next_char_seq(sequence, value):
         char = sequence[0]
         sequence = sequence[1:]
         char_seq.append(char)
+    if any([num > 247 or num < 0 for num in char_seq]):
+        return None
     return char_seq
 
 
