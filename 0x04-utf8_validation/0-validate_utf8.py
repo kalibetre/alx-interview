@@ -24,7 +24,7 @@ def get_next_char_seq(sequence, value):
     returns the next bytes in the sequence
     """
     num_bytes = num_bytes_required(value)
-    if num_bytes < 0:
+    if num_bytes < 0 or num_bytes > len(sequence):
         return None
 
     char_seq = []
