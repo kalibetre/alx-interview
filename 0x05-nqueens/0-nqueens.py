@@ -51,6 +51,9 @@ def solve_nqueens(board, solutions=[]):
             if row - 1 < 0:
                 break
             row -= 1
+        if row == n:
+            solutions.append([[row, board[row].index(1)] for row in range(n)])
+            row -= 1
 
     if row == 0:
         return
