@@ -18,8 +18,8 @@ def makeChange(coins, total):
 
     memory = [0] + [float('inf')] * total
 
-    for num in range(1, total + 1):
-        for coin in coins:
+    for coin in coins:
+        for num in range(coin, total + 1):
             if coin <= num:
                 memory[num] = min(memory[num], memory[num - coin] + 1)
 
