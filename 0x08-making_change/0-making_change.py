@@ -13,6 +13,9 @@ def makeChange(coins, total):
         - 0 if total is 0 or less
         - -1 if total cannot be met by any number of coins
     """
+    if total <= 0:
+        return 0
+
     memory = [0] + [float('inf')] * total
 
     for num in range(1, total + 1):
