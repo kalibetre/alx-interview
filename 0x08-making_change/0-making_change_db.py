@@ -5,7 +5,7 @@ Test 0x08 Coin Change Problem
 
 
 def makeChange(coins, total):
-    """makeChange implementation with greedy algorithm
+    """makeChange with dynamic programming implementation
 
     Returns:
         - fewest number of coins if total can be met
@@ -15,15 +15,11 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    coins = sorted(coins, reverse=True)
-    num_coins = 0
+    memory = [0] + [float('inf')] * total
+
     for coin in coins:
-        if total <= 0:
-            break
-        num_coins += total // coin
-        total = total % coin
+        for num in range(coin, total + 1):
+            if coin <= num:
+                memory[num] = min(memory[num], memory[num - coin] + 1)
 
-    if total != 0:
-        return -1
-
-    return num_coins
+    return memory[total] if memory[total] != float('inf') else -1
