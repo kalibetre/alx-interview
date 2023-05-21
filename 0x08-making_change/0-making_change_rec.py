@@ -43,11 +43,13 @@ def make_change_rec(coins, total, org_total):
 
     results = []
     for coin in possible_coins:
-        result = make_change_rec(possible_coins, total - coin, org_total)
-        results.append(result)
+        changes = make_change_rec(possible_coins, total % coin, org_total)
+        if changes >= 0:
+            changes += total // coin
+        results.append(changes)
 
     min_change = min(results)
-    return min_change + 1 if min_change >= 0 else -1
+    return min_change if min_change >= 0 else -1
 
 
 def makeChange(coins, total):
