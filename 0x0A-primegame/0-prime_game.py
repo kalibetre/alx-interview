@@ -28,20 +28,18 @@ def isWinner(x, nums):
     if invalid_nums or invalid_x:
         return None
 
-    possible_primes = get_prime_numbers(max(nums))
-    if len(possible_primes) == 0:
+    if x == 1 and nums[0] == 1:
+        return 'Ben'
+
+    primes = get_prime_numbers(max(nums))
+    if len(primes) == 0:
         return None
 
-    maria_wins = 0
-    ben_wins = 0
-    for n in nums:
-        primes = list(filter(lambda x: x <= n, possible_primes))
-        if len(primes) % 2 == 0:
-            ben_wins += 1
-        else:
-            maria_wins += 1
-
-    if maria_wins == ben_wins:
+    stats = [len(list(filter(lambda x: x <= n, primes))) % 2 for n in nums]
+    maria_wins = sum(stats)
+    if maria_wins == len(stats) / 2:
         return None
-
-    return 'Maria' if maria_wins > ben_wins else 'Ben'
+    if maria_wins > len(stats) / 2:
+        return 'Maria'
+    else:
+        return 'Ben'
