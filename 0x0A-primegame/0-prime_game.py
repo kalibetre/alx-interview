@@ -8,16 +8,11 @@ def is_prime(num):
     """
     checks if a number is prime
     """
-    if num <= 1 or (num != 2 and num % 2 == 0):
+    if num <= 1:
         return False
-    if num <= 3:
-        return True
-
-    i = 3
-    while (i <= num // 2):
+    for i in range(2, num // 2 + 1):
         if num % i == 0:
             return False
-        i += 2
     return True
 
 
