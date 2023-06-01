@@ -77,4 +77,7 @@ def isWinner(x, nums):
     for n in nums:
         stats[run_game(n)] += 1
 
+    if stats['M'] == stats['B']:
+        return None
+
     return 'Maria' if stats['M'] > stats['B'] else 'Ben'
