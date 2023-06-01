@@ -70,7 +70,7 @@ def isWinner(x, nums):
     """
 
     invalid_nums = type(nums) is not list or len(nums) == 0 or any(
-        type(n) is not int for n in nums)
+        type(n) is not int or n < 0 for n in nums)
     invalid_x = type(x) is not int or x != len(nums)
     if invalid_nums or invalid_x:
         return None
