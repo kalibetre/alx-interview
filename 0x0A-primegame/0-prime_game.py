@@ -10,7 +10,7 @@ def is_prime(num):
     """
     if num <= 1:
         return False
-    for i in range(2, num // 2 + 1):
+    for i in range(2, int(num**0.5) + 1):
         if num % i == 0:
             return False
     return True
@@ -68,6 +68,13 @@ def isWinner(x, nums):
     """
     runs the game for the specified rounds in nums array
     """
+
+    invalid_nums = type(nums) is not list or len(nums) == 0 or any(
+        type(n) is not int for n in nums)
+    invalid_x = type(x) is not int or x != len(nums)
+    if invalid_nums or invalid_x:
+        return None
+
     stats = {'B': 0, 'M': 0}
     for n in nums:
         stats[run_game(n)] += 1
